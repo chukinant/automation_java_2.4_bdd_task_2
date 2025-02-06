@@ -10,16 +10,18 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class AccountPage {
     private final SelenideElement header = $x("//*[@data-test-id='dashboard'][contains(text(),'Личный кабинет')]");
-    private ElementsCollection cards = $$(".list__item div");
+    private ElementsCollection cards = $$x("//*[@class='list__item']");
 
     public void verifyIsAccountPage() {
         header.shouldBe(Condition.visible);
     }
 
     public AddToCardPage initiateTransferToCard(int index) {
-        $(".list__item div").shouldBe(Condition.visible, Duration.ofSeconds(10));
         SelenideElement card = cards.get(index);
-        card.$x(".//button").click();
+        SelenideElement button = card.$x(".//button");
+        button.shouldBe(Condition.visible);
+        button.shouldBe(Condition.enabled);
+        button.click();
         return new AddToCardPage();
     }
 

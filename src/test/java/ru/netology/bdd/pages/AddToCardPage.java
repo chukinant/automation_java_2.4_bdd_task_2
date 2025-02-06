@@ -12,7 +12,7 @@ public class AddToCardPage {
     private final SelenideElement amountField = $x("//*[@data-test-id='amount']//input");
     private final SelenideElement submitButton = $x("//button[@data-test-id='action-transfer']");
 
-    public AddToCardPage() {
+    public void addToCardPageIsVisible() {
         addToCardHeader.shouldBe(Condition.visible);
     }
 
