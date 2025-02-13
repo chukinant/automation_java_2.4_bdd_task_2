@@ -7,7 +7,7 @@ import org.openqa.selenium.Keys;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class AddToCardPage {
-    private final SelenideElement addToCardHeader = $x("//*[contains(text(),'Пополнение карты')]");
+    private final SelenideElement addToCardHeader = $x("//form[@method='post']/..//*[@data-test-id]/following-sibling::*[contains(@class, 'heading')]");
     private final SelenideElement cardFromField = $x("//*[@data-test-id='from']//input");
     private final SelenideElement amountField = $x("//*[@data-test-id='amount']//input");
     private final SelenideElement submitButton = $x("//button[@data-test-id='action-transfer']");
@@ -31,8 +31,7 @@ public class AddToCardPage {
     }
 
     public void findErrorMsg() {
-        boolean isErrorMessageVisible =
-                $x("//*[contains(text(),'error')]").shouldBe(Condition.visible).exists() ||
-                        $x("//*[contains(text(),'шибка')]").shouldBe(Condition.visible).exists();
+        $x("//*[@data-test-id='error-notification']").shouldBe(Condition.visible).
+                shouldHave(Condition.text("Ошибка"));
     }
 }

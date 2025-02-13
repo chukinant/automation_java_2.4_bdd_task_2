@@ -9,6 +9,7 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Пусть;
 import io.cucumber.java.ru.Тогда;
 import io.restassured.http.ContentType;
+import ru.netology.bdd.data.API_Helper;
 import ru.netology.bdd.data.DataHelper;
 import ru.netology.bdd.pages.AccountPage;
 import ru.netology.bdd.pages.AddToCardPage;
@@ -28,6 +29,12 @@ public class Steps {
     public void openLoginPage(String url) {
         Selenide.open(url);
         loginPage = new LoginPage();
+    }
+
+    @Given("на картах по {int} рублей")
+    public void resetBalances(int balance) {
+        var api_helper = new API_Helper();
+        api_helper.resetCardsBalances();
     }
 
     @Когда("пользователь пытается авторизоваться с именем {string} и паролем {string}")
@@ -67,26 +74,4 @@ public class Steps {
     public void moneyAreTransferred(int cardToIndex, int balance) {
         accountPage.checkCardBalance(cardToIndex - 1, balance);
     }
-
-//    @Given("на картах по {int} рублей")
-//    public void resetCardBalances(int balance) {
-//            given()
-//                    .baseUri("http://localhost:9999")
-//                    .header("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6InZhc3lhIn0.JmhHh8NXwfqktXSFbzkPohUb90gnc3yZ9tiXa0uUpRY")
-//                    .contentType("application/json")
-//                    .body("{ \"balance\": " + balance + " }")
-//                    .when()
-//                    .put("/api/cards/" + "92df3f1c-a033-48e6-8390-206f6b1f56c0" + "/balance")
-//                    .then()
-//                    .statusCode(200);
-//            given()
-//                    .baseUri("http://localhost:9999")
-//                    .header("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6InZhc3lhIn0.JmhHh8NXwfqktXSFbzkPohUb90gnc3yZ9tiXa0uUpRY")
-//                    .contentType("application/json")
-//                    .body("{ \"balance\": " + balance + " }")
-//                    .when()
-//                    .put("/api/cards/" + "0f3f5c2a-249e-4c3d-8287-09f7a039391d" + "/balance")
-//                    .then()
-//                    .statusCode(200);
-//        }
 }
